@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addTodo, toggleTodo } from '../actions';
+import { addTodo, toggleTodo, resetTodo } from '../actions';
 import TextField from '../components/TextField';
 import TodoItem from '../components/TodoItem';
 
@@ -13,6 +13,7 @@ class Home extends React.Component {
         this.onToDoChange = this.onToDoChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onTodoClick = this.onTodoClick.bind(this);
+        this.onResetClick = this.onResetClick.bind(this);
     }
 
     onToDoChange(e) {
@@ -21,7 +22,7 @@ class Home extends React.Component {
     }
 
     onSubmit(e) {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && this.state.text) {
             this.props.addTodo(this.state.text);
             this.setState(() => ({ text: '' }));
         }
@@ -29,6 +30,10 @@ class Home extends React.Component {
 
     onTodoClick(id) {
         this.props.toggleTodo(id);
+    }
+
+    onResetClick() {
+        this.props.resetTodo();
     }
 
     render() {
@@ -41,6 +46,7 @@ class Home extends React.Component {
                     onChange={this.onToDoChange}
                     onSubmit={this.onSubmit}
                 />
+                <button onClick={this.onResetClick}>Reset State</button>
                 {this.props.todos.length > 0 && (
                     <ul>
                         {this.props.todos
@@ -84,6 +90,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     addTodo: text => dispatch(addTodo(text)),
     toggleTodo: id => dispatch(toggleTodo(id)),
+    resetTodo: id => dispatch(resetTodo(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -1,5 +1,5 @@
 import uuid from 'uuid';
-import { ADD_TODO, TOGGLE_TODO } from '../actions';
+import { ADD_TODO, TOGGLE_TODO, RESET_TODO } from '../actions';
 
 const initialState = {
     todos: [],
@@ -31,6 +31,8 @@ function todoApp(state = initialState, action) {
                     return item;
                 }),
             };
+        case RESET_TODO:
+            return initialState;
         default:
             return state;
     }
