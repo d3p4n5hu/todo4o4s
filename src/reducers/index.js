@@ -2,10 +2,21 @@ import uuid from 'uuid';
 import { ADD_TODO, TOGGLE_TODO, RESET_TODO } from '../actions';
 
 const initialState = {
-    todos: [],
+    todos: localStorage.getItem('todos')
+        ? JSON.parse(localStorage.getItem('todos'))
+        : [],
 };
 
+function saveStateToLocalStorage(todos) {
+    if (window.localStorage) {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    } else {
+        alert("Your browser doesn't support local storage");
+    }
+}
+
 function todoApp(state = initialState, action) {
+    let newState;
     switch (action.type) {
         case ADD_TODO:
             const newTodo = {
@@ -14,13 +25,13 @@ function todoApp(state = initialState, action) {
                 createdAt: new Date(),
                 completedAt: null,
             };
-            return {
-                ...state,
+            newState = {
                 todos: state.todos.concat(newTodo),
             };
+            saveStateToLocalStorage(newState.todos);
+            return newState;
         case TOGGLE_TODO:
-            return {
-                ...state,
+            newState = {
                 todos: state.todos.map(item => {
                     if (item.id === action.id) {
                         return {
@@ -31,8 +42,13 @@ function todoApp(state = initialState, action) {
                     return item;
                 }),
             };
+            saveStateToLocalStorage(newState.todos);
+            return newState;
         case RESET_TODO:
-            return initialState;
+            saveStateToLocalStorage([]);
+            return {
+                todos: [],
+            };
         default:
             return state;
     }
