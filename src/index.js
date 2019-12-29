@@ -9,13 +9,11 @@ import * as serviceWorker from './serviceWorker';
 
 const store = createStore(todosApp);
 
-store.dispatch({ type: 'ADD_TODO', text: 'hohoh' });
-
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
