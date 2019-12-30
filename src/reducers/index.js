@@ -1,5 +1,6 @@
 import uuid from 'uuid';
 import { ADD_TODO, TOGGLE_TODO, RESET_TODO } from '../actions';
+import { extractHashTags } from '../utils/helpers';
 
 const initialState = {
     todos: localStorage.getItem('todos')
@@ -22,6 +23,7 @@ function todoApp(state = initialState, action) {
             const newTodo = {
                 id: uuid(),
                 text: action.text,
+                hashTags: extractHashTags(action.text),
                 createdAt: new Date(),
                 completedAt: null,
             };

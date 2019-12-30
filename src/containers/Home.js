@@ -9,11 +9,14 @@ class Home extends React.Component {
         super(props);
         this.state = {
             text: '',
+            filter: [],
         };
         this.onToDoChange = this.onToDoChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onTodoClick = this.onTodoClick.bind(this);
         this.onResetClick = this.onResetClick.bind(this);
+        this.onHashTagClick = this.onHashTagClick.bind(this);
+        this.onResetFilterClick = this.onResetFilterClick.bind(this);
     }
 
     onToDoChange(e) {
@@ -36,6 +39,18 @@ class Home extends React.Component {
         this.props.resetTodo();
     }
 
+    onHashTagClick(tag) {
+        const filter = this.state.filter.includes(tag)
+            ? this.state.filter.filter(item => item !== tag)
+            : this.state.filter.concat(tag);
+
+        this.setState(() => ({ filter }));
+    }
+
+    onResetFilterClick() {
+        this.setState(() => ({ filter: [] }));
+    }
+
     render() {
         return (
             <div>
@@ -47,10 +62,23 @@ class Home extends React.Component {
                     onSubmit={this.onSubmit}
                 />
                 <button onClick={this.onResetClick}>Reset State</button>
+                {this.state.filter.length > 0 ? (
+                    <div>Filters: {this.state.filter.join()}</div>
+                ) : (
+                    <div>No filters applied</div>
+                )}
+                <button onClick={this.onResetFilterClick}>Reset Filters</button>
                 {this.props.todos.length > 0 && (
                     <ul>
                         {this.props.todos
-                            .filter(item => !item.completedAt)
+                            .filter(
+                                item =>
+                                    !item.completedAt &&
+                                    (!this.state.filter.length ||
+                                        item.hashTags.some(x =>
+                                            this.state.filter.includes(x)
+                                        ))
+                            )
                             .sort((itemOne, itemTwo) =>
                                 itemOne.createdAt > itemTwo.createdAt ? -1 : 1
                             )
@@ -59,10 +87,18 @@ class Home extends React.Component {
                                     key={item.id}
                                     item={item}
                                     onClick={this.onTodoClick}
+                                    onHashTagClick={this.onHashTagClick}
                                 />
                             ))}
                         {this.props.todos
-                            .filter(item => !!item.completedAt)
+                            .filter(
+                                item =>
+                                    !!item.completedAt &&
+                                    (!this.state.filter.length ||
+                                        item.hashTags.some(x =>
+                                            this.state.filter.includes(x)
+                                        ))
+                            )
                             .sort((itemOne, itemTwo) =>
                                 itemOne.completedAt > itemTwo.completedAt
                                     ? -1
@@ -73,6 +109,7 @@ class Home extends React.Component {
                                     key={item.id}
                                     item={item}
                                     onClick={this.onTodoClick}
+                                    onHashTagClick={this.onHashTagClick}
                                 />
                             ))}
                     </ul>
