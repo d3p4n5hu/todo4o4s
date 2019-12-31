@@ -1,0 +1,11 @@
+// Fonts
+$font: 'Roboto', sans-serif;
+
+// Colors
+$blue: rgb(97, 220, 251);
+$black: rgb(54, 61, 71);
+
+$border-color: lighten(
+    $color: $black,
+    $amount: 10,
+);

@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+* {
+    font-family: $font;
+    font-size: 16px;
+}
+
+html,
+body {
+    background-color: $blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    @media screen and (max-height: 768px) {
+        align-items: flex-start;
+    }
+}
+
+hr {
+    height: 1px;
+    background-color: $border-color;
+    border: 0;
+    margin: 0;
+}
+
+#root {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    background-color: $black;
+    border-radius: 4px;
+    width: 50%;
+    padding: 48px;
+    margin: auto;
+    color: white;
+    .header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    @media screen and (max-width: 768px) {
+        width: 75%;
+    }
+}
+
+.today {
+    font-weight: bold;
+}
+
+.active-tasks {
+    color: $blue;
+    font-size: 12px;
+}
+
+.text-input {
+    padding: 8px;
+    font-size: 16px;
+    font-family: $font;
+    border: 1px solid $border-color;
+    outline: none;
+    border-radius: 4px;
+    margin: 24px 0 12px 0;
+    width: 50%;
+    color: white;
+    background-color: darken($color: $black, $amount: 3);
+    letter-spacing: 1px;
+
+    &:focus {
+        background-color: darken($color: $black, $amount: 5);
+    }
+}
+
+.reset-button {
+    background-color: darken($color: $black, $amount: 5);
+    border: 0;
+    outline: 0;
+    color: white;
+    padding: 6px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    &:hover {
+        background-color: darken($color: $black, $amount: 7);
+    }
+    &:focus {
+        background-color: darken($color: $black, $amount: 10);
+    }
+}
+
+.todo-item-wrapper {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 500px;
+    overflow-y: auto;
+    .todo-item {
+        padding: 16px 0;
+        color: white;
+        border-bottom: 1px solid $border-color;
+        cursor: default;
+    }
+}
+
+.hashtag {
+    color: $blue;
+    cursor: pointer;
+}
+
+.hashtag-filter-wrapper {
+    min-height: 40px;
+    max-height: 100px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    .hashtag {
+        margin-right: 8px;
+        margin-bottom: 12px;
+        padding: 8px 16px;
+        border-radius: 50px;
+        background-color: darken($color: $black, $amount: 7);
+    }
+}

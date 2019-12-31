@@ -1,12 +1,9 @@
 import React from 'react';
 
-const TextField = props => (
-    <input
-        type="text"
-        value={props.value}
-        onChange={props.onChange}
-        onKeyPress={props.onSubmit}
-    />
-);
+const TextField = props => {
+    const { onSubmit, ...other } = props;
+
+    return <input type="text" onKeyPress={onSubmit} {...other} />;
+};
 
 export default TextField;

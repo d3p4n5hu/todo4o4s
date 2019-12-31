@@ -20,6 +20,7 @@ const TodoItem = props => {
 
     return (
         <li
+            className="todo-item"
             style={{
                 textDecoration: props.item.completedAt ? 'line-through' : '',
             }}

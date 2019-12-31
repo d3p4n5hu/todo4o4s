@@ -1,15 +1,15 @@
 import React from 'react';
 
 const HashTag = props => (
-    <a
-        href={props.text}
+    <span
+        className="hashtag"
         onClick={e => {
             e.stopPropagation();
             props.onHashTagClick(props.text);
         }}
     >
         {props.text}
-    </a>
+    </span>
 );
 
 export default HashTag;
